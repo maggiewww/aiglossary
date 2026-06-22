@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI术语库 — 帮助每个人轻松理解AI。权威定义、通俗解释、生活化示例，自动监测行业新术语。" />
+  <meta name="theme-color" content="#4F46E5" />
+  <title>AI术语库 | Artificial Intelligence Glossary</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <a href="javascript:location.reload()" class="logo">
+          <span class="logo-mark">AI</span>
+          <span class="logo-text">术语库</span>
+        </a>
+        <span class="logo-update" id="last-update"></span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-link active" data-tab="glossary">词库</a>
+        <a href="#" class="nav-link admin-only" data-tab="manage">管理</a>
+        <a href="#" class="nav-link" data-tab="about">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="main">
+    <!-- 词库页面 -->
+    <section id="tab-glossary" class="tab-content active">
+      <!-- 热词榜单 -->
+      <div class="trending-section" id="trending-section">
+        <div class="trending-header">
+          <div class="trending-title">
+            <span class="trending-icon">🔥</span>
+            <h2>热词榜单</h2>
+            <span class="trending-subtitle" id="trending-subtitle">最近 7 天</span>
+          </div>
+          <div class="trending-range">
+            <button class="range-btn" data-range="24h">24小时</button>
+            <button class="range-btn active" data-range="7d">7天</button>
+            <button class="range-btn" data-range="30d">30天</button>
+          </div>
+        </div>
+        <div class="trending-list" id="trending-list">
+          <div class="trending-empty">暂无热度数据，请等待后端首次扫描完成</div>
+        </div>
+      </div>
+
+      <!-- 介绍语 -->
+      <div class="glossary-intro">
+        <h2 class="intro-title">帮助每个人轻松理解AI</h2>
+        <p class="intro-desc">AI术语库是一个面向AI入门者和非技术人员的知识平台，通过权威定义与通俗解释，帮助用户快速理解人工智能相关术语。内容参考全球头部AI公司、高校、大英百科、Coursera等权威来源，并支持实时更新行业新术语，同时开放用户共创，你也可以点击右下角的 <strong>+</strong> 按钮手动添加。</p>
+      </div>
+
+      <!-- 搜索栏 -->
+      <div class="search-section">
+        <div class="search-container">
+          <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="搜索 AI 术语（支持中英文）..." />
+          <button id="clear-search" class="clear-btn" title="清除搜索">×</button>
+        </div>
+        <div class="search-stats" id="search-stats"></div>
+      </div>
+
+      <!-- 字母导航 -->
+      <div class="letter-nav" id="letter-nav"></div>
+
+      <!-- 词汇卡片列表 -->
+      <div class="glossary-list" id="glossary-list"></div>
+    </section>
+
+    <!-- 管理页面 -->
+    <section id="tab-manage" class="tab-content">
+      <!-- 扫描状态卡片 -->
+      <div class="scan-status-card" id="scan-status-card">
+        <div class="scan-status-header">
+          <h3>扫描状态</h3>
+          <button class="btn btn-primary btn-sm" id="trigger-scan-btn">立即扫描</button>
+        </div>
+        <div class="scan-status-grid">
+          <div class="scan-status-item">
+            <span class="scan-label">最近扫描</span>
+            <span class="scan-value" id="scan-last">-</span>
+          </div>
+          <div class="scan-status-item">
+            <span class="scan-label">下次扫描</span>
+            <span class="scan-value" id="scan-next">-</span>
+          </div>
+          <div class="scan-status-item">
+            <span class="scan-label">状态</span>
+            <span class="scan-value" id="scan-state">-</span>
+          </div>
+          <div class="scan-status-item">
+            <span class="scan-label">已发现新词</span>
+            <span class="scan-value" id="scan-discovered-count">0</span>
+          </div>
+        </div>
+        <div class="scan-history">
+          <h4>扫描历史</h4>
+          <div class="scan-history-list" id="scan-history-list"></div>
+        </div>
+      </div>
+
+      <!-- 待审核区域 -->
+      <div class="pending-section">
+        <div class="pending-header">
+          <h3>待审核词汇 <span class="badge" id="pending-count">0</span></h3>
+        </div>
+        <div class="pending-list" id="pending-list"></div>
+      </div>
+
+      <!-- 词库管理 -->
+      <div class="manage-header">
+        <h2>词库管理</h2>
+        <div class="manage-actions-top">
+          <input type="text" id="manage-search" class="manage-search-input" placeholder="搜索术语..." />
+        </div>
+      </div>
+      <div class="manage-list" id="manage-list"></div>
+    </section>
+
+    <!-- 关于页面 -->
+    <section id="tab-about" class="tab-content">
+      <div class="about-content">
+        <h2>关于AI术语库</h2>
+        <p>本术语库旨在为人工智能学习者提供一份全面、权威、易理解的术语参考。每个术语均包含：一句话通俗解释、来自权威来源的标准定义、生活化示例以及相关术语推荐。</p>
+
+        <h3>动态更新机制</h3>
+        <p>系统按智能频率（白天每小时、夜间每 6 小时）持续监测行业权威 RSS、博客、HackerNews 等信息源，自动识别新术语并通过 LLM 生成完整词条，进入待审核队列。同时记录术语出现频次，形成实时热词榜单。</p>
+
+        <h3>当前数据源 <button class="btn btn-secondary btn-sm" id="manage-sources-btn">管理数据源</button></h3>
+        <div class="sources-list" id="sources-list">加载中...</div>
+
+        <h3>权威定义来源</h3>
+        <ul class="source-list" id="authoritative-sources-list"></ul>
+
+        <h3>联系人</h3>
+        <ul class="contact-list">
+          <li>王小雨（ERP：wangxiaoyu.296）</li>
+          <li>庞若灵（ERP：pangruoling.1）</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- 词汇详情弹窗 -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="detail-modal">
+      <button class="modal-close" id="modal-close">×</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- 编辑词汇弹窗 -->
+  <div class="modal-overlay" id="edit-modal-overlay">
+    <div class="modal add-modal">
+      <button class="modal-close" id="edit-modal-close">×</button>
+      <h2 id="edit-modal-title">编辑术语</h2>
+      <form id="edit-term-form" class="add-form">
+        <input type="hidden" name="original-english" />
+        <div class="form-group">
+          <label>英文 *</label>
+          <input type="text" name="english" required />
+        </div>
+        <div class="form-group">
+          <label>中文 *</label>
+          <input type="text" name="chinese" required />
+        </div>
+        <div class="form-group">
+          <label>首字母</label>
+          <input type="text" name="initial" maxlength="1" />
+        </div>
+        <div class="form-group">
+          <label>一句话解释 *</label>
+          <input type="text" name="brief" required />
+        </div>
+        <div class="form-group">
+          <label>官方定义</label>
+          <textarea name="definition" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>权威来源链接</label>
+          <input type="url" name="source" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>示例</label>
+          <textarea name="example" rows="3" placeholder="生活化的示例帮助小白理解"></textarea>
+        </div>
+        <div class="form-group">
+          <label>关联词语（逗号分隔）</label>
+          <input type="text" name="related" placeholder="LLM, GPT, Transformer" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="edit-cancel">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 数据源管理弹窗 -->
+  <div class="modal-overlay" id="source-modal-overlay">
+    <div class="modal add-modal source-modal">
+      <button class="modal-close" id="source-modal-close">×</button>
+      <h2>管理数据源</h2>
+      <p class="modal-desc">勾选启用/禁用各数据源，保存后立即生效。下次扫描将按新配置抓取。</p>
+      <div class="source-editor" id="source-editor">加载中...</div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" id="source-save">保存</button>
+        <button type="button" class="btn btn-secondary" id="source-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="examples.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

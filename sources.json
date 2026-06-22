@@ -1,0 +1,35 @@
+{
+  "_comment": "AI术语库数据源配置。可随时手动编辑此文件增删源，重启服务后生效，或通过关于页管理员界面热编辑。",
+  "rss": [
+    { "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "enabled": true },
+    { "name": "MIT Tech Review", "url": "https://www.technologyreview.com/feed/", "enabled": true },
+    { "name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "enabled": true },
+    { "name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/", "enabled": true },
+    { "name": "Google News AI", "url": "https://news.google.com/rss/search?q=artificial+intelligence+new+technology&hl=en", "enabled": true }
+  ],
+  "blogs": [
+    { "name": "Anthropic Research", "url": "https://www.anthropic.com/research", "selector": "h3, h2, a[href*=\"/research/\"]", "enabled": true },
+    { "name": "OpenAI Blog", "url": "https://openai.com/index/", "selector": "h3, h2, [class*=\"heading\"]", "enabled": true },
+    { "name": "DeepMind Blog", "url": "https://deepmind.google/discover/blog/", "selector": "h3, h2, [class*=\"title\"]", "enabled": true },
+    { "name": "Hugging Face Blog", "url": "https://huggingface.co/blog", "selector": "h2, h3, article a", "enabled": true }
+  ],
+  "reddit": [
+    { "name": "r/MachineLearning", "url": "https://www.reddit.com/r/MachineLearning/hot.json", "enabled": false },
+    { "name": "r/artificial", "url": "https://www.reddit.com/r/artificial/hot.json", "enabled": false },
+    { "name": "r/LocalLLaMA", "url": "https://www.reddit.com/r/LocalLLaMA/hot.json", "enabled": false }
+  ],
+  "hackernews": {
+    "enabled": true,
+    "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+    "itemUrl": "https://hacker-news.firebaseio.com/v0/item/{id}.json",
+    "topN": 30,
+    "minScore": 100,
+    "aiKeywords": ["ai", "ml", "llm", "gpt", "model", "neural", "transformer", "diffusion", "agent", "rag", "training", "inference"]
+  },
+  "googleTrends": {
+    "enabled": false,
+    "geo": "",
+    "keyword": "AI",
+    "_note": "Google Trends 需要额外的抓取逻辑，启用后请确保网络可达"
+  }
+}
